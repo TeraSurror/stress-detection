@@ -1,5 +1,7 @@
 import React from 'react';
 import Dashboard from './dashboard';
+import StressForm from './dashboard/stress-form';
+import ChatBotComponent from './Chatbot/ChatBotComponent';
 
 function App() {
   return (
@@ -11,8 +13,9 @@ function App() {
       backgroundColor: "#0E1117"
     }}>
       <Dashboard>
-        <>Hello</>
+        <StressForm />
       </Dashboard>
+      {/* <ChatBotComponent/> */}
     </div >
   );
 }
