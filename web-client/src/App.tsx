@@ -1,7 +1,7 @@
 import React from 'react';
 import Dashboard from './dashboard';
 import StressForm from './dashboard/stress-form';
-import ChatBotComponent from './Chatbot/ChatBotComponent';
+// import ChatBotComponent from './Chatbot/ChatBotComponent';
 
 function App() {
   return (
