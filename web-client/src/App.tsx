@@ -15,7 +15,7 @@ function App() {
       <Dashboard>
         <StressForm />
       </Dashboard>
-      {/* <ChatBotComponent/> */}
+      <ChatBotComponent/>
     </div >
   );
 }

@@ -1,9 +1,15 @@
 import React from 'react';
 
-const MessageParser = ({ children }) => {
-  const parse = (message:any) => {
-    console.log(message);
-  };
+const MessageParser = ({ children, actions }) => {
+    const parse = (message) => {
+        if (message.toLowerCase().includes('hello') || message.includes('hey') || message.includes('hi')) {
+            actions.handleHello();
+        }else if(message.includes('Recommend')){
+            actions.handleQuery();
+        }else{
+            actions.handleDefault();
+        }
+      }
 
   return (
     <div>
