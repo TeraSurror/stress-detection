@@ -1,18 +1,30 @@
 import React, { useState } from "react";
 
+const generateRandomInteger = (min: number, max: number) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+type PredictionResponse = {
+    Score: string;
+    message: string;
+}
+
 const StressForm = () => {
 
-    const [age, setAge] = useState<number>(0);
-    const [dailySteps, setDailySteps] = useState<number>(0);
+    const [age, setAge] = useState<number>(generateRandomInteger(18, 65));
+    const [dailySteps, setDailySteps] = useState<number>(generateRandomInteger(0, 10000));
 
-    const [sleepDuration, setSleepDuration] = useState<number>(0);
-    const [sleepQuality, setSleepQuality] = useState<number>(0);
+    const [sleepDuration, setSleepDuration] = useState<number>(generateRandomInteger(0, 24));
+    const [sleepQuality, setSleepQuality] = useState<number>(generateRandomInteger(1, 10));
 
-    const [activityLevel, setActivityLevel] = useState<number>(0);
-    const [heartRate, setHeartRate] = useState<number>(0);
+    const [activityLevel, setActivityLevel] = useState<number>(generateRandomInteger(0, 100));
+    const [heartRate, setHeartRate] = useState<number>(generateRandomInteger(60, 120));
 
-    const [bpHigh, setBpHigh] = useState<number>(0);
-    const [bpLow, setBpLow] = useState<number>(0);
+    const [bpHigh, setBpHigh] = useState<number>(generateRandomInteger(90, 180));
+    const [bpLow, setBpLow] = useState<number>(generateRandomInteger(50, 120));
+
+    const [loading, setLoading] = useState<boolean>(false);
+    const [stressLevel, setStessLevel] = useState<number>(5);
 
     const onAgeSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setAge(parseInt(e.target.value))
@@ -44,6 +56,32 @@ const StressForm = () => {
 
     const onBpLowSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setBpLow(parseInt(e.target.value))
+    }
+
+    const getModelPrediction = async () => {
+        setLoading(true);
+        const url = "http://localhost:5000/model"
+        const data = {
+            age: age,
+            sleep_duration: sleepDuration,
+            quality_of_sleep: sleepQuality,
+            physical_activity_level: activityLevel,
+            heart_rate: heartRate,
+            daily_steps: dailySteps,
+            bp_high: bpHigh,
+            bp_low: bpLow,
+        }
+        const response = await fetch(url, {
+            method: "POST",
+            cache: "no-cache",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+        const prediction: PredictionResponse = await response.json();
+        setStessLevel(parseFloat(prediction.Score))
+        setLoading(false);
     }
 
     return (
@@ -207,12 +245,46 @@ const StressForm = () => {
                     </div>
                 </section>
 
+                <section style={{ margin: "1.5em 0 1em 0" }}>
+                    <button
+                        onClick={getModelPrediction}
+                        style={{
+                            backgroundColor: "#4299E1",
+                            color: "white",
+                            border: 0,
+                            padding: "0.8em 1em",
+                            fontSize: "1rem",
+                            cursor: "pointer",
+                            fontWeight: "bold"
+                        }}
+                    >
+                        Find Stress Level
+                    </button>
+                </section>
+
             </div>
             <div style={{ width: "40%" }}>
                 <h2 style={{ color: "white" }}>Predictions</h2>
                 <p style={{ color: "#58777D" }}>These predictions are based on the parameters selected on the left</p>
+                {
+                    loading ? (
+                        <p style={{ textAlign: 'center', color: 'white' }}>Loading...</p>
+                    ) : (
+                        <div style={{
+                            backgroundColor: "white",
+                            width: 'fit-content',
+                            height: 'fit-content',
+                            padding: '0.5em 2em',
+                            textAlign: 'center',
+                            borderRadius: '8px'
+                        }}>
+                            <p style={{ color: '#4299E1', padding: 0, margin: 0 }}>Stress Level</p>
+                            <p style={{ color: '#414CE0', padding: 0, margin: "0.5em", fontSize: '1.1rem' }}>{`${stressLevel}/10`}</p>
+                        </div>
+                    )
+                }
             </div>
-        </div>
+        </div >
     );
 }
 

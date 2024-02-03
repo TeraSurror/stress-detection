@@ -9,8 +9,6 @@ function App() {
       display: "flex",
       flexDirection: "row",
       justifyContent: "center",
-      height: "100vh",
-      backgroundColor: "#0E1117"
     }}>
       <Dashboard>
         <StressForm />
