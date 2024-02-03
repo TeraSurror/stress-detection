@@ -1,1 +1,25 @@
 nc-hack-env
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Flask
+instance/
+web_app.egg-info/
+db.sqlite
+
+# Environment
+env/
+
+# Node
+node_modules/
+
+# Build files
+/build
+/dist
+/*.log
+
+# Environment
+.env
