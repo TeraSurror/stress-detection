@@ -3,7 +3,11 @@ from endpoints.model_endpoint import model_endpoint_blueprint
 from endpoints.llm_endpoint import llm_endpoint_blueprint
 from endpoints.fb_endpoint import fb_endpoint_blueprint
 
+from flask_cors import CORS
+
 app = Flask(__name__)
+
+CORS(app)
 
 # Register Blueprints for Endpoints
 app.register_blueprint(model_endpoint_blueprint)

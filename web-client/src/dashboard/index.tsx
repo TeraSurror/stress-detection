@@ -1,25 +1,32 @@
 import React from "react";
 
+type Screen = 'form' | 'chat';
+
 type Props = {
-    children: string | JSX.Element | JSX.Element[]
+    children: string | JSX.Element | JSX.Element[];
+    changeScreen: (screen: Screen) => void;
 }
 
-const navLinks = [
-    {
-        name: "Home"
-    },
-    {
-        name: "Dataset"
-    },
-    {
-        name: "Prediction"
-    },
-    {
-        name: "Time Pass"
-    },
-]
+type NavType = {
+    name: string,
+    fn: (screen: Screen) => void;
+    screen: Screen;
+}
 
-const Dashboard: React.FC<Props> = ({ children }) => {
+const Dashboard: React.FC<Props> = ({ children, changeScreen }) => {
+
+    const navLinks: NavType[] = [
+        {
+            name: "Home",
+            fn: changeScreen,
+            screen: "form"
+        },
+        {
+            name: "Chat",
+            fn: changeScreen,
+            screen: "chat"
+        },
+    ]
 
     return (
         <div style={{
@@ -39,15 +46,17 @@ const Dashboard: React.FC<Props> = ({ children }) => {
             }}>
                 {
                     navLinks.map((item) => (
-                        <p style={{
-                            cursor: "pointer"
-                        }}>
+                        <p
+                            style={{
+                                cursor: "pointer"
+                            }}
+                            onClick={() => item.fn(item.screen)}
+                        >
                             {item.name}
                         </p>
                     ))
                 }
             </div>
-
             {children}
         </div>
     );
