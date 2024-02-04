@@ -2,14 +2,14 @@ import React from 'react';
 
 const ActionProvider = ({ createChatBotMessage, setState, children }) => {
 
-    const handleHello = () => {
-        const botMessage = createChatBotMessage('Hello. Nice to meet you.');
-    
-        setState((prev) => ({
-          ...prev,
-          messages: [...prev.messages, botMessage],
-        }));
-      };
+  const handleHello = () => {
+    const botMessage = createChatBotMessage('Hello. Nice to meet you.');
+
+    setState((prev) => ({
+      ...prev,
+      messages: [...prev.messages, botMessage],
+    }));
+  };
 
     const handleQuery = async (message) => {
 
@@ -20,11 +20,11 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
         }))
         const apiResponse = async () => {
 
-            const data = {
-              'input_text' : message
-            }
+      const data = {
+        'input_text': message
+      }
 
-            console.log(JSON.stringify(data))
+      console.log(JSON.stringify(data))
 
             try {
               const response = await fetch('https://b083-34-125-0-104.ngrok-free.app/api', {
@@ -47,15 +47,15 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
         }));
       };
 
-      const handleDefault = async () => {
-        
-        const botMessage = createChatBotMessage("I didnt quite get it, can you try to reprashe your question ? Hint: Ask me Recommend.....");
-    
-        setState((prev) => ({
-          ...prev,
-          messages: [...prev.messages, botMessage],
-        }));
-      };
+  const handleDefault = async () => {
+
+    const botMessage = createChatBotMessage("I didnt quite get it, can you try to reprashe your question ? Hint: Ask me Recommend.....");
+
+    setState((prev) => ({
+      ...prev,
+      messages: [...prev.messages, botMessage],
+    }));
+  };
 
   return (
     <div>

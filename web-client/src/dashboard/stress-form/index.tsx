@@ -24,7 +24,9 @@ const StressForm = () => {
     const [bpLow, setBpLow] = useState<number>(generateRandomInteger(50, 120));
 
     const [loading, setLoading] = useState<boolean>(false);
+    const [textLoading, setTextLoading] = useState<boolean>(false);
     const [stressLevel, setStessLevel] = useState<number>(0.0);
+    const [insight, setInsight] = useState<string>('');
 
     const onAgeSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setAge(parseInt(e.target.value))
@@ -80,9 +82,42 @@ const StressForm = () => {
             body: JSON.stringify(data),
         });
         const prediction: PredictionResponse = await response.json();
-        setStessLevel(+parseFloat(prediction.Score).toFixed(2))
+        setStessLevel(parseFloat(parseFloat(prediction.Score).toFixed(2)))
         setLoading(false);
     }
+
+    const getInsightFromLLM = async () => {
+        let message = `
+            Age: ${age}
+            Sleep Duration (hours): ${sleepDuration}
+            Quality of Sleep (scale 1-5, 5 being excellent): ${sleepQuality}
+            Physical Activity Level (sedentary, low, moderate, high): ${activityLevel}
+            Average Daily Heart Rate (beats per minute): ${heartRate}
+            Average Daily Steps: ${dailySteps}
+            Systolic Blood Pressure (mmHg): ${bpHigh}
+            Diastolic Blood Pressure (mmHg): ${bpLow}
+            Please consider these metrics in your analysis and suggest actionable health advice that can help in improving overall well-being, focusing on aspects like diet, exercise, sleep hygiene, stress management, and any preventive measures for potential health risks. Respond with no more than 30 words“ 
+        `;
+        const data = {
+            'input_text': message
+        }
+        try {
+            setTextLoading(true);
+            const response = await fetch('https://a5bf-34-31-41-113.ngrok-free.app/api', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+            const result = await response.json();
+            setInsight(result)
+        } catch (error) {
+            setInsight("Some error ocurred, please try again");
+        } finally {
+            setTextLoading(false);
+        }
+    };
 
     return (
         <div style={{
@@ -270,17 +305,48 @@ const StressForm = () => {
                     loading ? (
                         <p style={{ textAlign: 'center', color: 'white' }}>Loading...</p>
                     ) : (
-                        <div style={{
-                            backgroundColor: "white",
-                            width: 'fit-content',
-                            height: 'fit-content',
-                            padding: '0.5em 2em',
-                            textAlign: 'center',
-                            borderRadius: '8px'
-                        }}>
-                            <p style={{ color: '#4299E1', padding: 0, margin: 0 }}>Stress Level</p>
-                            <p style={{ color: '#414CE0', padding: 0, margin: "0.5em", fontSize: '1.1rem' }}>{`${stressLevel} / 10.0`}</p>
-                        </div>
+                        <>
+                            <div style={{ display: "flex", alignItems: "center" }}>
+                                <div style={{
+                                    backgroundColor: "white",
+                                    width: 'fit-content',
+                                    height: 'fit-content',
+                                    padding: '0.5em 2em',
+                                    textAlign: 'center',
+                                    borderRadius: '8px',
+                                    marginRight: '2em'
+                                }}>
+                                    <p style={{ color: '#4299E1', padding: 0, margin: 0 }}>Stress Level</p>
+                                    <p style={{ color: '#414CE0', padding: 0, margin: "0.5em", fontSize: '1.1rem' }}>{`${stressLevel} / 10.0`}</p>
+                                </div>
+                                <div>
+                                    <button
+                                        onClick={getModelPrediction}
+                                        style={{
+                                            backgroundColor: "#4299E1",
+                                            color: "white",
+                                            border: 0,
+                                            padding: "0.8em 1em",
+                                            fontSize: "1rem",
+                                            cursor: "pointer",
+                                            fontWeight: "bold",
+                                            borderRadius: "8px"
+                                        }}
+                                    >Generate Insights</button>
+                                </div>
+                            </div>
+                            <div
+                                style={{
+                                    marginTop: '1em',
+                                    backgroundColor: 'white',
+                                    color: '#414CE0'
+                                }}
+                            >
+                                {textLoading ? (
+                                    <p style={{ textAlign: 'center' }}>Loading...</p>
+                                ) : (<p>{insight}</p>)}
+                            </div>
+                        </>
                     )
                 }
             </div>
