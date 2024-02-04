@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import apiURL from "../../config";
+
 const generateRandomInteger = (min: number, max: number) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -103,7 +105,7 @@ const StressForm = () => {
         }
         try {
             setTextLoading(true);
-            const response = await fetch('https://a5bf-34-31-41-113.ngrok-free.app/api', {
+            const response = await fetch(`${apiURL}/api`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -321,7 +323,7 @@ const StressForm = () => {
                                 </div>
                                 <div>
                                     <button
-                                        onClick={getModelPrediction}
+                                        onClick={getInsightFromLLM}
                                         style={{
                                             backgroundColor: "#4299E1",
                                             color: "white",

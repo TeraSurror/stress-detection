@@ -1,5 +1,7 @@
 import React from 'react';
 
+import apiURL from '../config';
+
 const ActionProvider = ({ createChatBotMessage, setState, children }) => {
 
   const handleHello = () => {
@@ -27,7 +29,7 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
       console.log(JSON.stringify(data))
 
             try {
-              const response = await fetch('https://b083-34-125-0-104.ngrok-free.app/api', {
+              const response = await fetch(`${apiURL}/api`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
