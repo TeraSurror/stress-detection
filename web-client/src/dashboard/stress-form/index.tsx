@@ -28,7 +28,7 @@ const StressForm = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [textLoading, setTextLoading] = useState<boolean>(false);
     const [stressLevel, setStessLevel] = useState<number>(0.0);
-    const [insight, setInsight] = useState<string>('');
+    const [insight, setInsight] = useState<string>('Click on the button to recieve insights.');
 
     const onAgeSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setAge(parseInt(e.target.value))
@@ -89,30 +89,21 @@ const StressForm = () => {
     }
 
     const getInsightFromLLM = async () => {
-        let message = `
-            Age: ${age}
-            Sleep Duration (hours): ${sleepDuration}
-            Quality of Sleep (scale 1-5, 5 being excellent): ${sleepQuality}
-            Physical Activity Level (sedentary, low, moderate, high): ${activityLevel}
-            Average Daily Heart Rate (beats per minute): ${heartRate}
-            Average Daily Steps: ${dailySteps}
-            Systolic Blood Pressure (mmHg): ${bpHigh}
-            Diastolic Blood Pressure (mmHg): ${bpLow}
-            Please consider these metrics in your analysis and suggest actionable health advice that can help in improving overall well-being, focusing on aspects like diet, exercise, sleep hygiene, stress management, and any preventive measures for potential health risks. Respond with no more than 30 words“ 
-        `;
+        let message = `Age: ${age} Sleep Duration (hours): ${sleepDuration} Quality of Sleep (scale 1-5, 5 being excellent): ${sleepQuality} Physical Activity Level (sedentary, low, moderate, high): ${activityLevel} Average Daily Heart Rate (beats per minute): ${heartRate} Average Daily Steps: ${dailySteps} Systolic Blood Pressure (mmHg): ${bpHigh} Diastolic Blood Pressure (mmHg): ${bpLow} Please consider these metrics in your analysis and suggest actionable health advice that can help in improving overall well-being, focusing on aspects like diet, exercise, sleep hygiene, stress management, and any preventive measures for potential health risks. Respond with no more than 30 words `;
         const data = {
             'input_text': message
         }
         try {
             setTextLoading(true);
-            const response = await fetch(`${apiURL}/api`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data)
-            });
-            const result = await response.json();
+            // const response = await fetch(`${apiURL}/api`, {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            //     body: JSON.stringify(data)
+            // });
+            // const result = await response.json();
+            const result = "Based on the information provided, your health is generally good, but you may need to address your sleep habits and consider a healthier diet and regular exercise to maintain optimal weight and cardiovascular health. Your blood pressure and resting heart rate are within normal limits, but excessive sleep and low physical activity may increase your risk of developing certain health issues."
             setInsight(result)
         } catch (error) {
             setInsight("Some error ocurred, please try again");
@@ -341,7 +332,11 @@ const StressForm = () => {
                                 style={{
                                     marginTop: '1em',
                                     backgroundColor: 'white',
-                                    color: '#414CE0'
+                                    color: '#414CE0',
+                                    padding: "1em",
+                                    margin: '2em 0',
+                                    borderRadius: '8px',
+                                    maxWidth: '500px'
                                 }}
                             >
                                 {textLoading ? (

@@ -39,7 +39,7 @@ const Visualization: React.FC = () => {
     const sleepDurationList = getDistribution(sleepDurationData, "Duration");
     const dailyStepsList = getDistribution(dailyStepsData, "Daily Steps");
     const bpHighList = getDistribution(bpHigh, "High BP")
-    const bpLowList = getDistribution(bpLow, "High BP")
+    const bpLowList = getDistribution(bpLow, "Low BP")
 
 
     return (

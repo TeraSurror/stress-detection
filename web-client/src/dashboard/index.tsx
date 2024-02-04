@@ -39,8 +39,8 @@ const Dashboard: React.FC<Props> = ({ children, changeScreen, activeScreen }) =>
             minWidth: "70%",
             padding: "2em 0",
         }}>
-            <h1 style={{ color: "white" }}>FitFiction - Stress Detection using Sleep Data</h1>
-            <p style={{ color: "#58777D" }}>This app predicts the stress levels of a person, by using the Fitbit sleep data</p>
+            <h1 style={{ color: "white" }}>FitFiction - From Insight to Action</h1>
+            <p style={{ color: "#58777D" }}>Get personalised health insights, interactive advice, and data-driven paths to a happier, healthier you.</p>
 
             <div style={{
                 backgroundColor: "#262730",
