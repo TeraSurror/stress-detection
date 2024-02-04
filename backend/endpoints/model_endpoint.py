@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 import pickle
+import numpy as np
 import pandas as pd
 import os
 
@@ -34,7 +35,7 @@ def get_endpoint1():
     # Convert user inputs to DataFrame for prediction
 
     # Make stress level predictions
-    stress_score = model.predict(user_data)[0][0]
+    stress_score = np.round(model.predict(user_data)[0][0],1)
     print(f"Predicted Stress Level: {stress_score}")
 
     response_data = {

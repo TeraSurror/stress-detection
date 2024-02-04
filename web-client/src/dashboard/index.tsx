@@ -5,6 +5,7 @@ type Screen = 'form' | 'chat';
 type Props = {
     children: string | JSX.Element | JSX.Element[];
     changeScreen: (screen: Screen) => void;
+    activeScreen: Screen;
 }
 
 type NavType = {
@@ -13,7 +14,7 @@ type NavType = {
     screen: Screen;
 }
 
-const Dashboard: React.FC<Props> = ({ children, changeScreen }) => {
+const Dashboard: React.FC<Props> = ({ children, changeScreen, activeScreen }) => {
 
     const navLinks: NavType[] = [
         {
@@ -47,8 +48,14 @@ const Dashboard: React.FC<Props> = ({ children, changeScreen }) => {
                 {
                     navLinks.map((item) => (
                         <p
+                            key={item.screen}
                             style={{
-                                cursor: "pointer"
+                                cursor: "pointer",
+                                borderBottom: activeScreen === item.screen ? "2px solid white" : "none",
+                                paddingBottom: "0.5em",
+                                paddingLeft:"1em",
+                                paddingRight:"1em"
+
                             }}
                             onClick={() => item.fn(item.screen)}
                         >

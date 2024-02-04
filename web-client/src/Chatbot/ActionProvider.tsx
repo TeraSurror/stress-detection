@@ -14,16 +14,16 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
     const handleQuery = async () => {
         const apiResponse = async () => {
             try {
-              const response = await fetch('https://api.example.com/data');
+              const response = await fetch('https://jsonplaceholder.typicode.com/todos/1')
               const result = await response.json();
-              return result;
+              return result["title"];
             } catch (error) {
               console.error('Error fetching data:', error);
               return "Some error ocurred, try again"
           }};
-        const botMessage = createChatBotMessage(apiResponse);
+        const botMessage = createChatBotMessage(await apiResponse());
     
-        setState((prev) => ({
+        setState((prev: { messages: any; }) => ({
           ...prev,
           messages: [...prev.messages, botMessage],
         }));
