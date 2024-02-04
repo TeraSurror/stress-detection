@@ -11,12 +11,25 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
         }));
       };
 
-    const handleQuery = async () => {
+    const handleQuery = async (message) => {
         const apiResponse = async () => {
+
+            const data = {
+              'input_text' : message
+            }
+
+            console.log(JSON.stringify(data))
+
             try {
-              const response = await fetch('https://jsonplaceholder.typicode.com/todos/1')
+              const response = await fetch('https://109e-34-31-41-113.ngrok-free.app/api', {
+              mode:  'no-cors', 
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(data)});
               const result = await response.json();
-              return result["title"];
+              return result["result"];
             } catch (error) {
               console.error('Error fetching data:', error);
               return "Some error ocurred, try again"
