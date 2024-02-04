@@ -24,7 +24,7 @@ const StressForm = () => {
     const [bpLow, setBpLow] = useState<number>(generateRandomInteger(50, 120));
 
     const [loading, setLoading] = useState<boolean>(false);
-    const [stressLevel, setStessLevel] = useState<number>(5);
+    const [stressLevel, setStessLevel] = useState<number>(0.0);
 
     const onAgeSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setAge(parseInt(e.target.value))
@@ -80,7 +80,7 @@ const StressForm = () => {
             body: JSON.stringify(data),
         });
         const prediction: PredictionResponse = await response.json();
-        setStessLevel(parseFloat(prediction.Score))
+        setStessLevel(+parseFloat(prediction.Score).toFixed(2))
         setLoading(false);
     }
 
@@ -279,7 +279,7 @@ const StressForm = () => {
                             borderRadius: '8px'
                         }}>
                             <p style={{ color: '#4299E1', padding: 0, margin: 0 }}>Stress Level</p>
-                            <p style={{ color: '#414CE0', padding: 0, margin: "0.5em", fontSize: '1.1rem' }}>{`${stressLevel}/10`}</p>
+                            <p style={{ color: '#414CE0', padding: 0, margin: "0.5em", fontSize: '1.1rem' }}>{`${stressLevel} / 10.0`}</p>
                         </div>
                     )
                 }
