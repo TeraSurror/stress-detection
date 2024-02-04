@@ -12,6 +12,12 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
       };
 
     const handleQuery = async (message) => {
+
+        const dummy = createChatBotMessage('...Generating Response')
+        setState((prev: { messages: any; }) => ({
+          ...prev,
+          messages: [...prev.messages, dummy],
+        }))
         const apiResponse = async () => {
 
             const data = {
@@ -21,8 +27,7 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
             console.log(JSON.stringify(data))
 
             try {
-              const response = await fetch('https://109e-34-31-41-113.ngrok-free.app/api', {
-              mode:  'no-cors', 
+              const response = await fetch('https://b083-34-125-0-104.ngrok-free.app/api', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -38,7 +43,7 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
     
         setState((prev: { messages: any; }) => ({
           ...prev,
-          messages: [...prev.messages, botMessage],
+          messages: [...prev.messages.slice(0,-1), botMessage],
         }));
       };
 
