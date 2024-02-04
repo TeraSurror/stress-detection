@@ -24,6 +24,7 @@ lr = LinearRegression()
 lr.fit(X_train, y_train)
 
 y_pred = lr.predict(X_test)
+y_pred = np.maximum(0, y_pred)
 
 # Evaluate the model
 accuracy = lr.score(X_test, y_test)
