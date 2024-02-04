@@ -19,7 +19,7 @@ function App() {
       flexDirection: "row",
       justifyContent: "center",
     }}>
-      <Dashboard changeScreen={changeScreen}>
+      <Dashboard changeScreen={changeScreen} activeScreen={screen}>
         {
           screen === 'form' ? <StressForm /> : <></>
         }
