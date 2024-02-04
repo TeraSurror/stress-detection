@@ -3,7 +3,7 @@ import { createChatBotMessage } from 'react-chatbot-kit';
 
 let options = {}
 
-const botName = 'NapNinja.ai';
+const botName = 'FitFiction';
 
 
 const config = {
