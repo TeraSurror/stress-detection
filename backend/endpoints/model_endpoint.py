@@ -36,6 +36,11 @@ def get_endpoint1():
 
     # Make stress level predictions
     stress_score = np.round(model.predict(user_data)[0][0],1)
+    if stress_score>10:
+        stress_score = 10     
+    if stress_score<0:
+        stress_score = 0
+
     print(f"Predicted Stress Level: {stress_score}")
 
     response_data = {
