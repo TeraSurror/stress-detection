@@ -1,6 +1,6 @@
 import React from "react";
 
-type Screen = 'form' | 'chat';
+type Screen = 'form' | 'chat' | 'chart';
 
 type Props = {
     children: string | JSX.Element | JSX.Element[];
@@ -27,6 +27,11 @@ const Dashboard: React.FC<Props> = ({ children, changeScreen, activeScreen }) =>
             fn: changeScreen,
             screen: "chat"
         },
+        {
+            name: 'Data Visualization',
+            fn: changeScreen,
+            screen: "chart"
+        }
     ]
 
     return (
@@ -53,8 +58,8 @@ const Dashboard: React.FC<Props> = ({ children, changeScreen, activeScreen }) =>
                                 cursor: "pointer",
                                 borderBottom: activeScreen === item.screen ? "2px solid white" : "none",
                                 paddingBottom: "0.5em",
-                                paddingLeft:"1em",
-                                paddingRight:"1em"
+                                paddingLeft: "1em",
+                                paddingRight: "1em"
 
                             }}
                             onClick={() => item.fn(item.screen)}

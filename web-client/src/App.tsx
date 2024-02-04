@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import Dashboard from './dashboard';
 import StressForm from './dashboard/stress-form';
 import ChatBotComponent from './Chatbot/ChatBotComponent';
+import Visualization from './visualization';
 
-type Screen = 'form' | 'chat';
+type Screen = 'form' | 'chat' | 'chart';
 
 function App() {
 
-  const [screen, setScreen] = useState<Screen>('form');
+  const [screen, setScreen] = useState<Screen>('chart');
 
   const changeScreen = (newScreen: Screen) => {
     setScreen(newScreen);
@@ -25,6 +26,9 @@ function App() {
         }
         {
           screen === 'chat' ? <ChatBotComponent /> : <></>
+        }
+        {
+          screen === 'chart' ? <Visualization /> : <></>
         }
       </Dashboard>
     </div >
