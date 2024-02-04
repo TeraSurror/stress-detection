@@ -11,8 +11,14 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
     }));
   };
 
-  const handleQuery = async (message) => {
-    const apiResponse = async () => {
+    const handleQuery = async (message) => {
+
+        const dummy = createChatBotMessage('...Generating Response')
+        setState((prev: { messages: any; }) => ({
+          ...prev,
+          messages: [...prev.messages, dummy],
+        }))
+        const apiResponse = async () => {
 
       const data = {
         'input_text': message
@@ -20,28 +26,26 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
 
       console.log(JSON.stringify(data))
 
-      try {
-        const response = await fetch('https://a5bf-34-31-41-113.ngrok-free.app/api', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data)
-        });
-        const result = await response.json();
-        return result["result"];
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        return "Some error ocurred, try again"
-      }
-    };
-    const botMessage = createChatBotMessage(await apiResponse());
-
-    setState((prev: { messages: any; }) => ({
-      ...prev,
-      messages: [...prev.messages, botMessage],
-    }));
-  };
+            try {
+              const response = await fetch('https://b083-34-125-0-104.ngrok-free.app/api', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(data)});
+              const result = await response.json();
+              return result["result"];
+            } catch (error) {
+              console.error('Error fetching data:', error);
+              return "Some error ocurred, try again"
+          }};
+        const botMessage = createChatBotMessage(await apiResponse());
+    
+        setState((prev: { messages: any; }) => ({
+          ...prev,
+          messages: [...prev.messages.slice(0,-1), botMessage],
+        }));
+      };
 
   const handleDefault = async () => {
 
