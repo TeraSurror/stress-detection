@@ -1,5 +1,6 @@
 import Chatbot from 'react-chatbot-kit'
 import 'react-chatbot-kit/build/main.css'
+import "./customStyle.css"
 
 import config from './config';
 import MessageParser from './MessageParser';
@@ -8,12 +9,7 @@ import { relative } from 'path';
 
 const ChatBotComponent = () => {
   return (
-    <div style={
-      {
-        position:'relative',
-        top:"60%"
-      }
-    }>
+    <div>
       <Chatbot
         config={config}
         messageParser={MessageParser}
