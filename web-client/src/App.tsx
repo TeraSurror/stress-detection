@@ -8,7 +8,7 @@ type Screen = 'form' | 'chat' | 'chart';
 
 function App() {
 
-  const [screen, setScreen] = useState<Screen>('chart');
+  const [screen, setScreen] = useState<Screen>('form');
 
   const changeScreen = (newScreen: Screen) => {
     setScreen(newScreen);

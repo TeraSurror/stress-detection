@@ -28,7 +28,6 @@ const Visualization: React.FC = () => {
     const options = {
         title: "Sleep Duration",
         curveType: "function",
-
     }
 
     return (
