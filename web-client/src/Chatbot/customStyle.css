@@ -3,7 +3,7 @@
 }
 
 .react-chatbot-kit-chat-bot-message {
-    width: 40% !important;
+    max-width: 50% !important;
     text-align: left;
     margin-left: 0%;
 }
