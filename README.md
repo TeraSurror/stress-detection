@@ -1,4 +1,4 @@
-## NapNinja.ai
+## FitFiction
 ---
 
 - Machine Learning model that detects stress levels based on the sleep cycles of an individual.
